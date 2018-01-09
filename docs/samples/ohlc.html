@@ -22,25 +22,34 @@
 		<div style="width:1000px">
 			<canvas id="chart2"></canvas>
 		<div>
+		<h2>Dynamic OHLC</h2>
+		<div style="width:1000px">
+			<canvas id="chart3"></canvas>
+		<div>
 	</div>
 
 	<script>
-		function randomNumber(min, max) {
-			return Math.random() * (max - min) + min;
-		}
-
-		function randomBar(date, lastClose) {
+		function getBarNoT(lastClose) {
 			var open = randomNumber(lastClose * .95, lastClose * 1.05);
 			var close = randomNumber(open * .95, open * 1.05);
 			var high = randomNumber(Math.max(open, close), Math.max(open, close) * 1.1);
 			var low = randomNumber(Math.min(open, close) * .9, Math.min(open, close));
 			return {
-				t: date.valueOf(),
 				o: open,
 				h: high,
 				l: low,
 				c: close,
 			};
+		}
+
+		function randomBar(date, lastClose) {
+			var bar = getBarNoT(lastClose);
+			bar.t = date.valueOf();
+			return bar;
+		}
+
+		function randomNumber(min, max) {
+			return Math.random() * (max - min) + min;
 		}
 
 		var dateFormat = 'MMMM DD YYYY';
@@ -52,7 +61,7 @@
 				data.push(randomBar(date, data[data.length - 1].c));
 			}
 		}
-		
+
 		// OHLC
 		var ctx1 = document.getElementById("chart1").getContext("2d");
 		ctx1.canvas.width = 1000;
@@ -87,5 +96,51 @@
 				}]
 			}
 		});
+
+		// Dynamic OHLC
+		var ctx3 = document.getElementById("chart3").getContext("2d");
+		ctx3.canvas.width = 1000;
+		ctx3.canvas.height = 250;
+		var chart3 = new Chart(ctx3, {
+			type: 'ohlc',
+			data: {
+				datasets: [{
+					color: {
+						up: '#8d8',
+						down: '#d88',
+						linear: '#888',
+					},
+					armLength: 6,
+					lineWidth: 2,
+					label: "CHRTO - Chart.js Corporation, OHLC division",
+					data: [],
+				}]
+			}
+		});
+
+		var period = 1000;
+		var count = 60;
+		var t = Date.now() - count*period;
+		var bar = getBarNoT(30);
+		t = t - t%period;
+		bar.t = t;
+		chart3.data.datasets[0].data.push(bar);
+		t += period;
+		for(var i = 1 ; i < count ; i++, t += period) {
+			bar = getBarNoT(chart3.data.datasets[0].data[chart3.data.datasets[0].data.length-1].c);
+			bar.t = t;
+			chart3.data.datasets[0].data.push(bar);
+		}
+		chart3.update();
+
+		setInterval(function(){
+			bar = getBarNoT(chart3.data.datasets[0].data[chart3.data.datasets[0].data.length-1].c);
+			bar.t = t;
+			t += period;
+			chart3.data.datasets[0].data.shift();
+			chart3.data.datasets[0].data.push(bar);
+			chart3.update(0);
+		}, period);
+
 	</script>
 </body>
