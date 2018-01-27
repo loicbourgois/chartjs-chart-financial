@@ -226,6 +226,7 @@ module.exports = function(Chart) {
 		draw: function() {
 			var ctx = this._chart.ctx;
 			var vm = this._view;
+			console.log(vm.borderColor, globalOpts.elements.candlestick.borderColor);
 
 			var x = vm.x;
 			var o = vm.candle.o;
