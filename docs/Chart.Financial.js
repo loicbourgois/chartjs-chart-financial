@@ -22,31 +22,22 @@ module.exports = function(Chart) {
 	Chart.controllers.candlestick = Chart.controllers.financial.extend({
 		dataElementType: Chart.elements.Candlestick,
 
-		updateElement: function(element, index, reset) {
-			var me = this;
-			var meta = me.getMeta();
-			var dataset = me.getDataset();
-
-			element._xScale = me.getScaleForId(meta.xAxisID);
-			element._yScale = me.getScaleForId(meta.yAxisID);
-			element._datasetIndex = me.index;
-			element._index = index;
-
-			element._model = {
-				datasetLabel: dataset.label || '',
-				//label: '', // to get label value please use dataset.data[index].label
-
-				// Appearance
-				color: dataset.color,
-				borderColor: dataset.borderColor,
-				borderWidth: dataset.borderWidth,
-			};
-
-			me.updateElementGeometry(element, index, reset);
-
-			element.pivot();
+/*/
+		getElementOptions: function() {
+			return this.chart.options.elements.candlestick;
 		},
+/*/
 
+		updateRectangle: function(rectangle, options) {
+			Chart.controllers.financial.prototype.updateRectangle.apply(
+				this,
+				[
+					rectangle,
+					options ? options : this.chart.options.elements.candlestick
+				]
+			);
+		}
+/**/
 	});
 
 };
