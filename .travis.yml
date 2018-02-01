@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "6"
+  - "8"
+  - "9"
 
 before_install:
   - "export CHROME_BIN=/usr/bin/google-chrome"
@@ -9,8 +11,7 @@ before_install:
 
 script:
   - gulp build
-  - gulp test
-  #- gulp test --coverage
+  - gulp test --coverage
   #- gulp docs
   #- gulp package
   #- gulp bower
