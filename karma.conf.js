@@ -1,7 +1,7 @@
 module.exports = function(karma) {
 	var config = {
 		browsers: ['Firefox'],
-		files: ['./node_modules/chart.js/dist/Chart.js', './Chart.Financial.js', './test/**/*.js'],
+		files: ['./node_modules/chart.js/dist/Chart.js', './node_modules/moment/moment.js', './Chart.Financial.js', './test/**/*.js'],
 		frameworks: ['browserify', 'jasmine'],
 		reporters: ['progress', 'kjhtml'],
 		preprocessors: {

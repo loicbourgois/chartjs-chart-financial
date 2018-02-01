@@ -9,7 +9,8 @@ before_install:
 
 script:
   - gulp build
-  - gulp test --coverage
+  - gulp test
+  #- gulp test --coverage
   #- gulp docs
   #- gulp package
   #- gulp bower
