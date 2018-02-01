@@ -7,7 +7,7 @@ describe('FinancialLinear Scale', function() {
 	});
 
 	it('Should have the correct min/max values', function() {
-		for(var c = 0 ; c < 100 ; c++) {
+		for(var i = 0 ; i < 1000 ; i++) {
 			var chart = window.acquireChart({
 				type: 'candlestick',
 				data: {
