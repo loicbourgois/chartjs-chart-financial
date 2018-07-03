@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "chart.js": "^2.7.1",
-    "gulp-jscs": "^4.1.0"
+    "gulp-jscs": "^4.1.0",
+    "snyk": "^1.88.0"
   },
   "devDependencies": {
     "browserify": "^15.0.0",
@@ -33,5 +34,10 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.9.0"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
